@@ -49,9 +49,10 @@ export class Raycaster {
 
     private drawScenery(rayCount: number, distance: number) {
         const wallHeight = Math.floor(this.constants.halfHeight / distance);
+        const wallColor = this.getShaderColor(distance);
 
         this.drawLine(rayCount, 0, rayCount, this.constants.halfHeight - wallHeight, 'lightblue');
-        this.drawLine(rayCount, this.constants.halfHeight - wallHeight, rayCount, this.constants.halfHeight + wallHeight, 'salmon');
+        this.drawLine(rayCount, this.constants.halfHeight - wallHeight, rayCount, this.constants.halfHeight + wallHeight, wallColor);
         this.drawLine(rayCount, this.constants.halfHeight + wallHeight, rayCount, this.constants.height, 'darkolivegreen');
     }
 
@@ -65,5 +66,11 @@ export class Raycaster {
 
     private degreeToRadians(degree: number) {
         return degree * Math.PI / 180;
+    }
+
+    private getShaderColor(distance: number): string {
+        const colorHue = Math.floor(255 - (distance / 15.0) * 255.0);
+        // tslint:disable-next-line: no-bitwise
+        return '#' + ((1 << 24) + (colorHue << 16) + (colorHue << 8) + colorHue).toString(16).slice(1);
     }
 }
