@@ -2,6 +2,7 @@ import { DungeonMap } from './Map';
 import { Player } from './Player';
 import { Raycaster } from './Raycaster';
 import { Constants } from './Constants';
+import { Inject } from '@angular/core';
 
 export class Dungeon {
     private canvas: HTMLCanvasElement;
@@ -12,13 +13,14 @@ export class Dungeon {
     private player: Player;
     private raycaster: Raycaster;
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(@Inject(Document) private document: Document, canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.context = this.canvas.getContext('2d');
 
         this.constants = new Constants(canvas);
         this.dungeonMap = new DungeonMap();
-        this.player = new Player();
+        this.player = new Player(document);
+        // @ts-ignore
         this.raycaster = new Raycaster(this.context, this.player, this.dungeonMap, this.constants);
     }
 

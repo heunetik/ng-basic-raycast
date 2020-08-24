@@ -19,6 +19,8 @@ export class Raycaster {
     }
 
     raycast() {
+        this.player.update();
+        this.context.clearRect(0, 0, this.constants.width, this.constants.height);
         let rayAngle = this.player.facingAngle - this.player.halfFov;
         for (let rayCount = 0; rayCount < this.constants.width; rayCount++) {
             const ray = {

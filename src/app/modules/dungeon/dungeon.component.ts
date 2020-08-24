@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { Dungeon } from './game/Dungeon';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-dungeon',
@@ -11,11 +12,23 @@ export class DungeonComponent implements OnInit {
 
   canvas: ElementRef<HTMLCanvasElement>;
   dungeon: Dungeon;
+  gameInterval: any;
+  FPS = 50;
 
-  constructor() { }
+  constructor(@Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit() {
-    this.dungeon = new Dungeon(this.canvas.nativeElement);
+    this.dungeon = new Dungeon(document, this.canvas.nativeElement);
+    this.startGameLoop();
+  }
+
+  private startGameLoop(): void {
+    this.gameInterval = setInterval(() => {
+      this.gameLoop();
+    }, 1000 / this.FPS);
+  }
+
+  private gameLoop(): void {
     this.dungeon.render();
   }
 }
