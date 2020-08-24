@@ -19,7 +19,7 @@ export class Dungeon {
 
         this.constants = new Constants(canvas);
         this.dungeonMap = new DungeonMap();
-        this.player = new Player(document);
+        this.player = new Player(document, this.dungeonMap.mapData);
         // @ts-ignore
         this.raycaster = new Raycaster(this.context, this.player, this.dungeonMap, this.constants);
     }

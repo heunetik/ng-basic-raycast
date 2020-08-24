@@ -9,8 +9,10 @@ export class Player {
     turn = 0;
     velocity = 0.1;
     turnVelocity = 2;
+    mapData: number[][];
 
-    constructor(document: Document) {
+    constructor(document: Document, mapData: any) {
+        this.mapData = mapData;
         this.document = document;
         this.addListeners();
     }
@@ -18,7 +20,6 @@ export class Player {
     update(): void {
         const newX = this.coordX + (this.movement * Math.cos(this.facingAngle * (Math.PI / 180)) * this.velocity);
         const newY = this.coordY + (this.movement * Math.sin(this.facingAngle * (Math.PI / 180)) * this.velocity);
-        console.log(newX, newY);
         this.facingAngle += this.turn * this.turnVelocity;
         if (!this.collision(newX, newY)) {
             this.coordX = newX;
@@ -50,9 +51,10 @@ export class Player {
         this.turn = 0;
     }
 
-    private collision(x: number, y: number): boolean {
-        const tileX = Math.floor(x / 50);
-        const tileY = Math.floor(y / 50);
+    collision(x: number, y: number): boolean {
+        if (this.mapData[Math.floor(y)][Math.floor(x)] !== 0) {
+            return true;
+        }
         return false;
     }
 
