@@ -42,16 +42,16 @@ export class Raycaster {
             let distance = Math.sqrt(Math.pow(this.player.coordX - ray.rayX, 2) + Math.pow(this.player.coordY - ray.rayY, 2));
             distance = distance * Math.cos(this.degreeToRadians(rayAngle - this.player.facingAngle));
 
-            this.drawScenery(rayCount, distance);
+            this.drawScenery(rayCount, distance, wall);
 
             // Increment view angle
             rayAngle += this.incrementAngle;
         }
     }
 
-    private drawScenery(rayCount: number, distance: number) {
+    private drawScenery(rayCount: number, distance: number, wall: number) {
         const wallHeight = Math.floor(this.constants.halfHeight / distance);
-        const wallColor = this.getShaderColor(distance);
+        const wallColor = this.getShaderColor(distance, wall);
 
         this.drawLine(rayCount, 0, rayCount, this.constants.halfHeight - wallHeight, 'lightblue');
         this.drawLine(rayCount, this.constants.halfHeight - wallHeight, rayCount, this.constants.halfHeight + wallHeight, wallColor);
@@ -70,9 +70,17 @@ export class Raycaster {
         return degree * Math.PI / 180;
     }
 
-    private getShaderColor(distance: number): string {
-        const colorHue = Math.floor(255 - (distance / 15.0) * 255.0);
-        // tslint:disable-next-line: no-bitwise
-        return '#' + ((1 << 24) + (colorHue << 16) + (colorHue << 8) + colorHue).toString(16).slice(1);
+    private getShaderColor(distance: number, wall): string {
+        const r = Math.floor(226 - (distance / 15.0) * 255.0);
+        const g = Math.floor(166 - (distance / 15.0) * 255.0);
+        const b = Math.floor(147 - (distance / 15.0) * 255.0);
+        const w = Math.floor(255 - (distance / 15.0) * 255.0);
+        if (wall === 2) {
+            // tslint:disable-next-line: no-bitwise
+            return '#' + ((1 << 24) + (w << 16) + (w << 8) + w).toString(16).slice(1);
+        } else {
+            // tslint:disable-next-line: no-bitwise
+            return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
     }
 }
