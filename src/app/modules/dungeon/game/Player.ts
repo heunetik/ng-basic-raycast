@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 export class Player {
     document: Document;
     fieldOfView = 60;
@@ -10,11 +12,14 @@ export class Player {
     velocity = 0.1;
     turnVelocity = 2;
     mapData: number[][];
+    subject: Subject<boolean>;
+    finished: boolean;
 
     constructor(document: Document, mapData: any) {
         this.mapData = mapData;
         this.document = document;
         this.addListeners();
+        this.subject = new Subject<boolean>();
     }
 
     update(): void {
@@ -52,7 +57,11 @@ export class Player {
     }
 
     collision(x: number, y: number): boolean {
-        if (this.mapData[Math.floor(y)][Math.floor(x)] !== 0) {
+        const tile = this.mapData[Math.floor(y)][Math.floor(x)];
+        if (tile !== 0) {
+            if (tile === 2) {
+                this.subject.next(true);
+            }
             return true;
         }
         return false;

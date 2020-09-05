@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RoutingModule } from './modules/router/routing.module';
 import { AppComponent } from './app.component';
 import { DungeonModule } from './modules/dungeon/dungeon.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { DungeonModule } from './modules/dungeon/dungeon.module';
   imports: [
     BrowserModule,
     DungeonModule,
-    RoutingModule
+    RoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,16 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>Congratulations! You found the exit!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p class="centered">
+            <span>You did very well, your overall time spent was &nbsp;</span>
+            <mat-chip-list aria-label="Fish selection"><mat-chip>{{ data }}</mat-chip></mat-chip-list>
+            <span>&nbsp; Would you like to try again?</span>
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button [mat-dialog-close]="true">Yes</button>
+        <button mat-button [mat-dialog-close]="false">No</button>
+    </mat-card-actions>
+</mat-card>

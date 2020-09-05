@@ -1,3 +1,7 @@
 <div class="container">
-    <canvas class="game-screen" #dungeon width="640" height="480"></canvas>
+    <canvas class="game-screen" #dungeon width="1024" height="768"></canvas>
+    <div class="controls">
+        <button mat-raised-button color="warn" (click)="restart()">Restart</button>
+        <button mat-raised-button>{{ elapsedTime }}</button>
+    </div>
 </div>

@@ -70,7 +70,7 @@ export class Raycaster {
         return degree * Math.PI / 180;
     }
 
-    private getShaderColor(distance: number, wall): string {
+    private getShaderColor(distance: number, wall: number): string {
         const r = Math.floor(226 - (distance / 15.0) * 255.0);
         const g = Math.floor(166 - (distance / 15.0) * 255.0);
         const b = Math.floor(147 - (distance / 15.0) * 255.0);
