@@ -7,7 +7,7 @@ export class Raycaster {
     constants: Constants;
     player: Player;
     map: DungeonMap;
-    precision = 32;
+    precision = 64;
     incrementAngle: number;
 
     constructor(context: CanvasRenderingContext2D, player: Player, map: DungeonMap, constants: Constants) {

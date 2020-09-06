@@ -20,7 +20,6 @@ export class DungeonComponent implements OnInit {
   FPS = 50;
   gameStarted = false;
   elapsedTime: number;
-  secondsToMinutes = (seconds: number) => Math.floor(seconds / 60) + ':' + ('0' + Math.floor(seconds % 60)).slice(-2);
 
   constructor(@Inject(DOCUMENT) private document: Document, public dialog: MatDialog) { }
 
@@ -45,6 +44,7 @@ export class DungeonComponent implements OnInit {
 
   restart() {
     this.gameStarted = false;
+    this.dungeon.subject.next(false);
     this.dungeon = new Dungeon(document, this.canvas.nativeElement);
     this.getDungeonUpdates();
     clearInterval(this.gameInterval);
@@ -66,10 +66,13 @@ export class DungeonComponent implements OnInit {
   private getDungeonUpdates() {
     timer(0, 1000).pipe(takeUntil(this.dungeon.subject)).subscribe(t => this.elapsedTime = t);
     this.dungeon.subject.pipe(distinctUntilChanged()).subscribe((r: boolean) => {
+      if (!r) {
+        return;
+      }
       const dialogRef = this.dialog.open(ExitPopupComponent, {
         panelClass: 'level-finish',
         width: '640px',
-        data: this.secondsToMinutes(this.elapsedTime)
+        data: this.elapsedTime
       });
 
       dialogRef.afterClosed().subscribe(result => {

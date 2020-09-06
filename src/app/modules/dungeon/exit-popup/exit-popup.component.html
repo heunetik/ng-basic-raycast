@@ -5,7 +5,10 @@
     <mat-card-content>
         <p class="centered">
             <span>You did very well, your overall time spent was &nbsp;</span>
-            <mat-chip-list aria-label="Fish selection"><mat-chip>{{ data }}</mat-chip></mat-chip-list>
+            <mat-chip-list><mat-chip>{{ secondsToMinutes(data) }}</mat-chip></mat-chip-list>
+        </p>
+        <p class="centered">
+            <span>The current record is &nbsp;</span><mat-chip-list><mat-chip>{{ secondsToMinutes(record) }}</mat-chip></mat-chip-list><span>&nbsp; seconds.</span>
             <span>&nbsp; Would you like to try again?</span>
         </p>
     </mat-card-content>
